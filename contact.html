@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Chae Bin</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Noto+Sans+KR:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ivory: #F4F1E6;
+      --deep-green: #1F3A2D;
+      --brick-red: #A3472A;
+      --golden-yellow: #D8A337;
+      --warm-sand: #D9C8A5;
+      --forest-mist: #5E6F64;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--deep-green);
+      font-family: "Noto Serif KR", serif;
+    }
+
+    /* ───────── 헤더 ───────── */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 95px;
+      background: var(--deep-green);
+      z-index: 1000;
+    }
+
+    .header-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 32px;
+    }
+
+    .site-title {
+      font-family: "EB Garamond", serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--ivory);
+      text-decoration: none;
+    }
+    .site-title:visited {
+      color: var(--ivory);
+    }
+
+    .header-note {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 0.9rem;
+      color: var(--warm-sand);
+      text-align: right;
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    /* ───────── 사이드바 ───────── */
+    .sidebar {
+      position: fixed;
+      top: 53px; /* 헤더 높이만큼 아래 */
+      left: 0;
+      width: 230px;
+      height: calc(100vh - 80px);
+      background: var(--deep-green);
+      padding: 22px 18px 32px;
+      color: var(--ivory);
+      overflow-y: auto;
+    }
+
+    .sidebar-section-title {
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: var(--warm-sand);
+    }
+
+    .sidebar a {
+      display: block;
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--ivory);
+      padding: 13px 0;
+    }
+
+    .sidebar a.sub-link {
+      padding-left: 14px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .sidebar a:hover {
+      color: var(--golden-yellow);
+    }
+
+    /* ───────── 메인 영역 ───────── */
+    main.main-content {
+      margin-left: 230px; /* 사이드바 폭 */
+      padding: 130px 40px 48px; /* 헤더 공간 + 여백 */
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      main.main-content {
+        margin-left: 0;
+        padding: 100px 16px 32px;
+      }
+    }
+
+    /* ───────── CONTACT 영역 ───────── */
+    .contact-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .contact-header {
+      margin-bottom: 28px;
+    }
+
+    .contact-title {
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brick-red);
+    }
+
+    .contact-sub {
+      margin-top: 4px;
+      font-family: "EB Garamond", serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest-mist);
+    }
+
+    .contact-card {
+      margin-top: 18px;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 24px 26px 26px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .insta-link {
+      position: relative;
+      display: inline-block;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+      text-decoration: none;
+    }
+
+    .contact-image {
+      display: block;
+      width: 260px;  /* 사진 크기 여기서 조절 */
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .insta-link:hover .contact-image {
+      transform: scale(1.04);
+      filter: brightness(0.9);
+    }
+
+    .insta-overlay {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      padding: 8px 12px;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.05)
+      );
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 0.9rem;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.06em;
+    }
+
+    .insta-overlay span {
+      opacity: 0.9;
+    }
+
+    .contact-info {
+      text-align: center;
+      font-size: 0.98rem;
+      line-height: 1.8;
+      color: var(--deep-green);
+    }
+
+    .contact-info strong {
+      font-weight: 700;
+    }
+
+    .contact-info a {
+      color: var(--brick-red);
+      text-decoration: none;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      .contact-card {
+        padding: 20px 18px 22px;
+      }
+      .contact-image {
+        width: 210px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ───────── 헤더 ───────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Chae Bin</a>
+      <div class="header-note">@binni_rim</div>
+    </div>
+  </header>
+
+  <!-- ───────── 사이드바 ───────── -->
+  <nav class="sidebar">
+    <div>
+      <div class="sidebar-section-title">WORKS</div>
+      <a href="2022.html" class="sub-link">2022</a>
+      <a href="2023.html" class="sub-link">2023</a>
+      <a href="2024.html" class="sub-link">2024</a>
+      <a href="2025.html" class="sub-link">2025</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <div class="sidebar-section-title">ABOUT</div>
+      <a href="profile.html" class="sub-link">Profile</a>
+      <a href="work_note.html" class="sub-link">Work Note</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <a href="contact.html">CONTACT</a>
+    </div>
+  </nav>
+
+  <!-- ───────── 메인 콘텐츠 ───────── -->
+  <main class="main-content">
+    <div class="contact-wrapper">
+      <header class="contact-header">
+        <h1 class="contact-title">CONTACT</h1>
+        <div class="contact-sub">ARTWORK & COMMISSION</div>
+      </header>
+
+      <section class="contact-card">
+        <a href="https://www.instagram.com/binni__rim/" target="_blank" rel="noopener noreferrer" class="insta-link">
+          <img src="image/29B9C6C9-C244-478C-9E6A-74BC070B9C21.jpg" alt="Instagram 바로가기" class="contact-image">
+          <div class="insta-overlay">
+            <span>Instagram&nbsp;&nbsp;@binni_rim</span>
+          </div>
+        </a>
+
+        <div class="contact-info">
+          작품 구매 및 제작 의뢰는<br>
+          <strong>인스타그램 DM</strong> 또는 <strong>이메일</strong>을 통해 문의해 주세요.<br><br>
+          <strong>Instagram</strong> @binni_rim<br>
+          <strong>E-mail</strong> <a href="mailto:chaebin347@naver.com">chaebin347@naver.com</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2022 | Chae Bin Works</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Noto+Sans+KR:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ivory: #F4F1E6;
+      --deep-green: #1F3A2D;
+      --brick-red: #A3472A;
+      --golden-yellow: #D8A337;
+      --warm-sand: #D9C8A5;
+      --forest-mist: #5E6F64;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--deep-green);
+      font-family: "Noto Serif KR", serif;
+    }
+
+    /* ───────── 헤더 (main file.html 그대로) ───────── */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 95px;
+      background: var(--deep-green);
+      z-index: 1000;
+    }
+
+    .header-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 32px;
+    }
+
+    .site-title {
+      font-family: "EB Garamond", serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--ivory);
+      text-decoration: none;
+    }
+    .site-title:visited {
+      color: var(--ivory);
+    }
+
+    .header-note {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 0.9rem;
+      color: var(--warm-sand);
+      text-align: right;
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    /* ───────── 사이드바 (main file.html 그대로) ───────── */
+    .sidebar {
+      position: fixed;
+      top: 53px;
+      left: 0;
+      width: 230px;
+      height: calc(100vh - 80px);
+      background: var(--deep-green);
+      padding: 22px 18px 32px;
+      color: var(--ivory);
+      overflow-y: auto;
+    }
+
+    .sidebar-section-title {
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: var(--warm-sand);
+    }
+
+    .sidebar a {
+      display: block;
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--ivory);
+      padding: 13px 0;
+    }
+
+    .sidebar a.sub-link {
+      padding-left: 14px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .sidebar a:hover {
+      color: var(--golden-yellow);
+    }
+
+    /* ───────── 메인 영역 ───────── */
+    main.main-content {
+      margin-left: 230px;
+      padding: 130px 40px 48px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      main.main-content {
+        margin-left: 0;
+        padding: 110px 16px 32px;
+      }
+    }
+
+    /* ───────── 연도 타이틀 ───────── */
+    .year-heading {
+      text-align: center;
+      margin-bottom: 32px;
+      font-family: "Noto Sans KR", sans-serif;
+      font-weight: 900;
+      font-size: 4.4rem;
+      color: var(--brick-red);
+    }
+
+    /* ───────── 작품 카드 그리드 ───────── */
+    .works-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .work-card {
+      margin-bottom: 28px;
+      cursor: pointer;
+    }
+
+    .work-inner {
+      position: relative;
+      background: var(--brick-red);
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 100px;
+    }
+
+    .work-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+  .work-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* bottom은 굳이 필요 없으니 빼도 됨 */
+  padding: 16px 18px;          /* 위에서 조금만 내려오게 여백 */
+  display: block;              /* flex 말고 일반 블록 요소 */
+  color: var(--ivory);
+  font-family: "Noto Serif KR", serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  white-space: pre-line;       /* 엔터 → 줄바꿈 유지 */
+  text-align: left;            /* 텍스트 왼쪽 정렬 */
+}
+
+
+
+    /* hover / locked 공통 상태 */
+    .work-card.hover .work-image,
+    .work-card.locked .work-image {
+      opacity: 0;
+      transform: scale(1.02);
+    }
+
+    .work-card.hover .work-caption,
+    .work-card.locked .work-caption {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Chae Bin</a>
+      <div class="header-note">@binni_rim</div>
+    </div>
+  </header>
+
+  <!-- 사이드바 (index.html과 동일 구조) -->
+  <nav class="sidebar">
+    <div>
+      <div class="sidebar-section-title">WORKS</div>
+      <a href="2022.html" class="sub-link">2022</a>
+      <a href="2023.html" class="sub-link">2023</a>
+      <a href="2024.html" class="sub-link">2024</a>
+      <a href="2025.html" class="sub-link">2025</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <div class="sidebar-section-title">ABOUT</div>
+      <a href="profile.html" class="sub-link">Profile</a>
+      <a href="work_note.html" class="sub-link">Work Note</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <a href="contact.html">CONTACT</a>
+    </div>
+  </nav>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="main-content">
+    <!-- 연도 타이틀 -->
+    <h1 class="year-heading">
+      2025
+    </h1>
+
+    <!-- 작품 그리드 -->
+    <div class="works-grid">
+      <div class="row">
+
+        <!-- 작품 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0571.jpg" alt="작품 이미지 1" class="work-image">
+              <div class="work-caption">
+초록나무
+캔버스에 아크릴, 24x24cm, 2025
+200,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 작품 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0581.jpg" alt="작품 이미지 2" class="work-image">
+              <div class="work-caption">
+은행나무
+캔버스에 아크릴, 24x24cm, 2025
+200,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 작품 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0568.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+이팝나무
+캔버스에 아크릴, 40x30cm, 2025
+230,000원
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+ <!-- 작품 4 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0561.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+라벤더
+캔버스에 아크릴 과슈, 34x52cm, 2025
+300,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 5 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_6433.JPG" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+무제
+나무 판넬 위 나무,80.3x53.0
+2025
+소장품
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 6 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_6432.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+무제
+나무 판넬 위 나무,75.0 x 60.0
+2025
+소장품
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 7 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_6428.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+무제
+나무 판넬 위 나무, 80.3 x 53.0
+2025
+소장품
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 8 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/2025_001.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_색(色)_001」
+캔버스 위 아크릴, 100.0x80.3
+2025
+1,500,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+         <!-- 작품 9 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/2025_002.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_색(色)_002」
+캔버스 위 아크릴, 100.0x80.3
+2025
+1,500,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+         <!-- 작품 10 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/2025_003.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_색(色)_003」
+캔버스 위 아크릴, 100.0x80.3
+2025
+1,500,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 작품 11 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/2025_004.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_001」
+종이판넬 위 아크릴, 90.9x72.7
+2025
+1,100,000원
+              </div>
+            </div>
+          </div>
+ </div>
+
+        <!-- 작품 12 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/2025_005.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_002」
+종이판넬 위 아크릴, 90.9x72.7
+2025
+1,100,000원
+              </div>
+            </div>
+          </div>
+</div>
+
+        <!-- 작품 13 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/2025_006.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_003」
+종이판넬 위 아크릴, 90.9x72.7
+2025
+1,100,000원
+              </div>
+            </div>
+          </div>
+</div>
+
+         <!-- 작품 14 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0471.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_004」
+종이판넬 위 아크릴,24x33
+2025
+350,000원
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 15 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0514.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_005」
+종이판넬 위 아크릴, 18x26, 2025, 150,000원
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 16 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0503.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_006」
+종이판넬 위 아크릴,20x20
+2025
+200,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 17 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0492.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_007」
+종이판넬 위 아크릴, 20x20
+2025
+200,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 18 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0534.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_008」
+종이판넬 위 아크릴, 16x22, 2025, 150,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 19 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0498.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_009」
+종이판넬 위 아크릴, 20x20
+2025
+170,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 20 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0466.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_010」
+종이판넬 위 아크릴, 10x26, 2025, 200,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 21 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0538.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_011」
+종이판넬 위 아크릴, 16x22, 2025, 150,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 22 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0504.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_012」
+종이판넬 위 아크릴, 20x20
+2025
+150,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- 작품 23 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0523.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_013」
+종이판넬 위 아크릴, 16x26, 2025, 200,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- 작품 24 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0482.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_014」
+종이판넬 위 아크릴, 46x38
+2025
+240,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- 작품 25 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0537.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_015」
+종이판넬 위 아크릴, 16x22, 2025, 150,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- 작품 26 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0525.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_016」
+종이판넬 위 아크릴, 18x26, 2025, 160,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- 작품 27 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="work-card" data-locked="false">
+            <div class="work-inner">
+              <img src="image/IMG_0483.jpg" alt="작품 이미지 3" class="work-image">
+              <div class="work-caption">
+「무한집소(無限集小)_층(層)_017」
+종이판넬 위 아크릴, 12x36, 2025, 190,000원
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <!-- 필요하면 아래에 같은 형식으로 계속 추가하면 됨 -->
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- hover + 클릭 고정 스크립트 -->
+  <script>
+    const cards = document.querySelectorAll('.work-card');
+
+    cards.forEach(card => {
+      // 마우스 올렸을 때: locked가 아니면 hover 상태
+      card.addEventListener('mouseenter', () => {
+        if (card.dataset.locked !== 'true') {
+          card.classList.add('hover');
+        }
+      });
+
+      // 마우스 나갈 때: locked가 아니면 hover 해제
+      card.addEventListener('mouseleave', () => {
+        if (card.dataset.locked !== 'true') {
+          card.classList.remove('hover');
+        }
+      });
+
+      // 클릭: locked 토글
+      card.addEventListener('click', () => {
+        const isLocked = card.dataset.locked === 'true';
+
+        if (isLocked) {
+          card.dataset.locked = 'false';
+          card.classList.remove('locked');
+          card.classList.remove('hover'); // 이미지로 복귀
+        } else {
+          card.dataset.locked = 'true';
+          card.classList.add('locked');
+          card.classList.add('hover'); // 캡션 고정
+        }
+      });
+    });
+  </script>
+</body>
+</html>

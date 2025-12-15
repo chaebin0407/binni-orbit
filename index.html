@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chae Bin | Portfolio</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Noto+Sans+KR:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ivory: #F4F1E6;
+      --deep-green: #1F3A2D;
+      --brick-red: #A3472A;
+      --golden-yellow: #D8A337;
+      --warm-sand: #D9C8A5;
+      --forest-mist: #5E6F64;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--deep-green);
+      font-family: "Noto Serif KR", serif;
+    }
+
+    /* ───────── 헤더 ───────── */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 95px;
+      background: var(--deep-green);
+      z-index: 1000;
+    }
+
+    .header-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* 가운데 정렬 */
+      padding: 0 32px;
+    }
+
+    .site-title {
+      font-family: "EB Garamond", serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--ivory);
+      text-decoration: none;
+    }
+    .site-title:visited {
+      color: var(--ivory);
+    }
+
+    /* 헤더 오른쪽 텍스트 */
+    .header-note {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 0.9rem;
+      color: var(--warm-sand);
+      text-align: right;
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    /* ───────── 사이드바 ───────── */
+    .sidebar {
+      position: fixed;
+      top: 53px; /* 헤더 높이만큼 아래 */
+      left: 0;
+      width: 230px;
+      height: calc(100vh - 80px);
+      background: var(--deep-green);
+      padding: 22px 18px 32px;
+      color: var(--ivory);
+      overflow-y: auto;
+    }
+
+    .sidebar-section-title {
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: var(--warm-sand);
+    }
+
+    .sidebar a {
+      display: block;
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--ivory);
+      padding: 13px 0;
+    }
+
+    .sidebar a.sub-link {
+      padding-left: 14px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .sidebar a:hover {
+      color: var(--golden-yellow);
+    }
+
+    /* ───────── 메인 영역 ───────── */
+    main.main-content {
+      margin-left: 230px; /* 사이드바 폭 */
+      padding: 130px 40px 48px; /* 헤더 공간 + 여백 */
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      main.main-content {
+        margin-left: 0;
+        padding: 100px 16px 32px;
+      }
+    }
+
+    /* ───────── 연도별 슬라이드 영역 ───────── */
+    .year-carousel-section {
+      max-width: 970px;
+      margin: 0 auto 48px;
+    }
+
+    /* 상단 텍스트 탭 (2025 대표 이미지 등) */
+    .year-tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 54px;
+      margin-bottom: 10px;
+    }
+
+    .year-tab {
+      background: none;
+      border: none;
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 2.0rem;
+      color: var(--forest-mist);
+      cursor: pointer;
+      padding: 4px 6px;
+    }
+
+    .year-tab:hover {
+      color: var(--deep-green);
+    }
+
+    .year-tab.active {
+      color: var(--deep-green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* 실제 이미지 슬라이드 */
+    #yearCarousel {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      background: var(--forest-mist);
+    }
+
+    .year-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.3s ease;
+    }
+
+    .year-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Noto Sans KR", sans-serif;
+      font-weight: 900;
+      font-size: 3rem;
+      letter-spacing: 0.18em;
+      color: #ffffff;
+      text-transform: uppercase;
+      opacity: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.45),
+        rgba(0, 0, 0, 0.3)
+      );
+      transition: opacity 0.3s ease;
+    }
+
+    .carousel-item:hover .year-overlay {
+      opacity: 1; /* 마우스 올라가면 연도 뜸 */
+    }
+
+    .carousel-item:hover .year-image {
+      filter: brightness(0.75); /* 투명도/밝기 조절 느낌 */
+    }
+
+    /* 심플한 좌우 버튼 */
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: auto;
+      padding: 0 14px;
+    }
+
+    .control-icon {
+      font-size: 1.7rem;
+      color: rgba(244, 241, 230, 0.9);
+    }
+
+    .carousel-control-prev:hover .control-icon,
+    .carousel-control-next:hover .control-icon {
+      color: #ffffff;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      background: none;
+    }
+
+    /* ───────── 소개 영역 ───────── */
+    .intro-block {
+      max-width: 950px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 22px 26px 26px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .intro-name {
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .intro-name span.en {
+      font-family: "EB Garamond", serif;
+      font-size: 2.1rem;
+      font-weight: 600;
+    }
+
+    .intro-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--deep-green);
+      white-space: pre-line; /* 엔터를 줄바꿈으로 반영 */
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ───────── 헤더 ───────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- 홈 버튼 (항상 메인으로 돌아옴) -->
+      <a href="index.html" class="site-title">Chae Bin</a>
+
+      <!-- 오른쪽 설명 -->
+      <div class="header-note">
+        @binni_rim
+      </div>
+    </div>
+  </header>
+
+  <!-- ───────── 사이드바 ───────── -->
+  <nav class="sidebar">
+    <div>
+      <div class="sidebar-section-title">WORKS</div>
+      <a href="2022.html" class="sub-link">2022</a>
+      <a href="2023.html" class="sub-link">2023</a>
+      <a href="2024.html" class="sub-link">2024</a>
+      <a href="2025.html" class="sub-link">2025</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <div class="sidebar-section-title">ABOUT</div>
+      <a href="profile.html" class="sub-link">Profile</a>
+      <a href="work_note.html" class="sub-link">Work Note</a>
+    </div>
+
+    <div style="margin-top:18px;">
+     
+      <a href="contact.html">CONTACT</a>
+    </div>
+  </nav>
+
+  <!-- ───────── 메인 콘텐츠 ───────── -->
+  <main class="main-content">
+
+    <!-- 연도별 대표 이미지 슬라이드 -->
+    <section class="year-carousel-section">
+
+      <!-- 상단 탭 (텍스트) -->
+      <div class="year-tabs">
+        <button class="year-tab active" data-bs-target="#yearCarousel" data-bs-slide-to="0" type="button">
+          2025 
+        </button>
+        <button class="year-tab" data-bs-target="#yearCarousel" data-bs-slide-to="1" type="button">
+          2024
+        </button>
+        <button class="year-tab" data-bs-target="#yearCarousel" data-bs-slide-to="2" type="button">
+          2023 
+        </button>
+        <button class="year-tab" data-bs-target="#yearCarousel" data-bs-slide-to="3" type="button">
+          2022 
+        </button>
+      </div>
+
+      <!-- Bootstrap Carousel (wrap = true → 2022 → 다음에 다시 2025로 루프) -->
+      <div id="yearCarousel" class="carousel slide" data-bs-ride="false" data-bs-wrap="true">
+        <div class="carousel-inner">
+
+          <!-- 2025 -->
+<div class="carousel-item active">
+  <a href="2025.html">
+    <img src="image/2025_000.jpg" class="year-image" alt="2025 대표 이미지">
+    <div class="year-overlay">2025</div>
+  </a>
+</div>
+
+<!-- 2024 -->
+<div class="carousel-item">
+  <a href="2024.html">
+    <img src="image/IMG_0400.jpg" class="year-image" alt="2024 대표 이미지">
+    <div class="year-overlay">2024</div>
+  </a>
+</div>
+
+<!-- 2023 -->
+<div class="carousel-item">
+  <a href="2023.html">
+    <img src="image/2023_000.JPG" class="year-image" alt="2023 대표 이미지">
+    <div class="year-overlay">2023</div>
+  </a>
+</div>
+
+<!-- 2022 -->
+<div class="carousel-item">
+  <a href="2022.html">
+    <img src="image/2022_002.jpg" class="year-image" alt="2022 대표 이미지">
+    <div class="year-overlay">2022</div>
+  </a>
+</div>
+
+
+        </div>
+
+        <!-- 좌우 버튼 (단순 화살표) -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#yearCarousel" data-bs-slide="prev">
+          <span class="control-icon" aria-hidden="true">&#10094;</span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#yearCarousel" data-bs-slide="next">
+          <span class="control-icon" aria-hidden="true">&#10095;</span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ░ 소개 텍스트 영역 ░ -->
+    <section class="intro-block">
+      <div class="intro-name">
+        채빈 <span class="en">Chae Bin</span>
+      </div>
+      <p class="intro-text">
+김채빈의 작업은 ‘작은 것들이 모여 세계를 만든다’는 믿음에서 출발한다.
+그는 점 하나, 선 하나, 버려질 면봉이나 조각난 종이 같은 미세한 단위들을 집요하게 반복하며
+그 축적의 힘이 만들어내는 새로운 형태를 기록한다.
+
+자연을 바라보는 그의 시선은 아주 가까운 곳에서 시작된다.
+땅 위로 돋아나는 풀, 나뭇잎 사이로 스며드는 빛, 계절과 색의 미묘한 변화 —
+이 모든 순간들은 반복적인 손의 움직임을 통해 화면 속에서 다시 태어난다.
+
+채빈에게 작업은 ‘큰 것을 만드는 방법’이 아니라
+‘작은 것들을 끝까지 들여다보는 태도’에 가깝다.
+그의 작품에서 드러나는 섬세한 리듬과 강박적인 밀도는
+바로 이 태도가 만든 시각적 세계이다.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- 탭(active 상태)와 캐러셀 동기화 -->
+  <script>
+    const yearTabs = document.querySelectorAll(".year-tab");
+    const yearCarouselEl = document.getElementById("yearCarousel");
+
+    if (yearCarouselEl) {
+      const yearCarousel = new bootstrap.Carousel(yearCarouselEl, {
+        interval: false,
+        wrap: true // 2022 다음에 다시 2025로 넘어가게
+      });
+
+      // 탭 클릭 시 해당 슬라이드로 이동
+      yearTabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+          yearCarousel.to(index);
+        });
+      });
+
+      // 슬라이드 변경될 때 탭 active 상태 변경
+      yearCarouselEl.addEventListener("slide.bs.carousel", function (event) {
+        yearTabs.forEach(t => t.classList.remove("active"));
+        yearTabs[event.to].classList.add("active");
+      });
+    }
+  </script>
+</body>
+</html>

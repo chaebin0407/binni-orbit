@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Work Note | Chae Bin</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Noto+Sans+KR:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ivory: #F4F1E6;
+      --deep-green: #1F3A2D;
+      --brick-red: #A3472A;
+      --golden-yellow: #D8A337;
+      --warm-sand: #D9C8A5;
+      --forest-mist: #5E6F64;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--deep-green);
+      font-family: "Noto Serif KR", serif;
+    }
+
+    /* ───────── 헤더 ───────── */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 95px;
+      background: var(--deep-green);
+      z-index: 1000;
+    }
+
+    .header-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 32px;
+    }
+
+    .site-title {
+      font-family: "EB Garamond", serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--ivory);
+      text-decoration: none;
+    }
+    .site-title:visited {
+      color: var(--ivory);
+    }
+
+    .header-note {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 0.9rem;
+      color: var(--warm-sand);
+      text-align: right;
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    /* ───────── 사이드바 ───────── */
+    .sidebar {
+      position: fixed;
+      top: 53px; /* 헤더 높이만큼 아래 */
+      left: 0;
+      width: 230px;
+      height: calc(100vh - 80px);
+      background: var(--deep-green);
+      padding: 22px 18px 32px;
+      color: var(--ivory);
+      overflow-y: auto;
+    }
+
+    .sidebar-section-title {
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: var(--warm-sand);
+    }
+
+    .sidebar a {
+      display: block;
+      font-family: "Noto Serif KR", serif;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--ivory);
+      padding: 13px 0;
+    }
+
+    .sidebar a.sub-link {
+      padding-left: 14px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .sidebar a:hover {
+      color: var(--golden-yellow);
+    }
+
+    /* ───────── 메인 영역 ───────── */
+    main.main-content {
+      margin-left: 230px; /* 사이드바 폭 */
+      padding: 130px 40px 48px; /* 헤더 공간 + 여백 */
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      main.main-content {
+        margin-left: 0;
+        padding: 100px 16px 32px;
+      }
+    }
+
+    /* ───────── Work Note 전용 스타일 ───────── */
+    .note-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .note-header {
+      margin-bottom: 20px;
+    }
+
+    .note-title {
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brick-red);
+    }
+
+    .note-sub {
+      margin-top: 4px;
+      font-family: "EB Garamond", serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest-mist);
+    }
+
+    .note-meta {
+      margin-top: 6px;
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 0.9rem;
+      color: var(--forest-mist);
+    }
+
+    .note-body {
+      margin-top: 26px;
+      padding: 26px 30px 30px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+      border-left: 4px solid var(--brick-red);
+      font-size: 1.02rem;
+      line-height: 1.9;
+      white-space: pre-line; /* 작성한 줄바꿈 유지 */
+    }
+
+    .note-body p {
+      margin-bottom: 1.1em;
+    }
+
+    .note-tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--warm-sand);
+      font-size: 0.8rem;
+      font-family: "Noto Sans KR", sans-serif;
+      color: var(--forest-mist);
+      background: rgba(244, 241, 230, 0.6);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ───────── 헤더 ───────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Chae Bin</a>
+      <div class="header-note">@binni_rim</div>
+    </div>
+  </header>
+
+  <!-- ───────── 사이드바 ───────── -->
+  <nav class="sidebar">
+    <div>
+      <div class="sidebar-section-title">WORKS</div>
+      <a href="2022.html" class="sub-link">2022</a>
+      <a href="2023.html" class="sub-link">2023</a>
+      <a href="2024.html" class="sub-link">2024</a>
+      <a href="2025.html" class="sub-link">2025</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <div class="sidebar-section-title">ABOUT</div>
+      <a href="profile.html" class="sub-link">Profile</a>
+      <a href="work_note.html" class="sub-link">Work Note</a>
+    </div>
+
+    <div style="margin-top:18px;">
+      <a href="contact.html">CONTACT</a>
+    </div>
+  </nav>
+
+  <!-- ───────── 메인 콘텐츠 ───────── -->
+  <main class="main-content">
+    <div class="note-wrapper">
+      <header class="note-header">
+        <h1 class="note-title">WORK NOTE</h1>
+        <div class="note-sub">chae bin</div>
+        <div class="note-meta">집소성대(集小成大)를 중심으로 한 작업 기록</div>
+      </header>
+
+      <section class="note-body">
+        <div class="note-tag">Artist Statement · Work Note</div>
+
+        <p>
+제 작업은 작은 단위의 반복과 축적에서 출발합니다. 드로잉에서 시작된 점과 원형에 대한 관심은 재료 실험과 회화로 확장되며, 시간성, 손의 리듬, 그리고 쌓임의 구조를 시각화하는 방식으로 이어지고 있습니다. 자연에서 관찰한 미세한 변화와 사소한 요소들이 모여 하나의 흐름을 이루는 방식에 주목하며, 그 과정을 통해 제가 지닌 세계관인 ‘집소성대(集小成大)’를 꾸준히 탐구합니다.
+        </p>
+
+        <p>
+집소성대는 작은 것들이 모여 큰 하나를 이룬다는 자연의 이치를 담고 있으며, 제 작업뿐 아니라 삶을 이루는 중요한 가치관이기도 합니다. 저는 그중에서도 특히 ‘집소(集小)’의 개념에 집중합니다. 우리는 흔히 결과만을 바라보지만, 저는 어떤 모습의 결과든 그 자체로 충분히 아름답다고 믿습니다. 색만 다른 작은 동그라미들이 모여 하나의 장면을 이루듯, 저는 그 축적 과정이 만들어내는 아름다움을 작품 속에 기록하고자 합니다.
+        </p>
+
+        <p>
+작업은 크고 작은 동그라미를 붓으로 직접 그려내는 방식으로 진행됩니다. 종종 도구로 찍어낸 표현으로 오해받기도 하지만, 저에게는 동그라미 하나하나를 정확히 그려내는 과정이 작업의 핵심이기 때문에 붓과 물감 외의 재료를 사용하지 않습니다. ‘집소’의 개념에 맞게 수많은 동그라미를 쌓고 배치하며 화면을 구성하고, 그 축적 속에서 다양한 깊이와 미묘한 변화가 드러나도록 합니다.
+        </p>
+
+        <p>
+작업의 영감은 주로 자연에서 비롯됩니다. 작은 잎들이 모여 울창한 숲을 이루고, 회색빛 땅이 작은 풀들로 물들어 초원이 되어가는 과정처럼, 자연이 만들어내는 축적의 장면들은 제 작업의 중요한 원천입니다. 또한 일기와 작업노트를 꾸준히 쓰며 스스로를 돌아보는 과정 역시 제 작업의 중요한 기반이 됩니다. 이러한 관찰과 사유의 반복 속에서 저는 작은 단위들이 모여 하나의 세계를 이루는 방식을 계속해서 질문하고, 그 흐름을 화면 위에 기록합니다.
+        </p>
+      </section>
+    </div>
+  </main>
+
+</body>
+</html>
